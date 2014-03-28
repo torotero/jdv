@@ -6,18 +6,34 @@ require 'spec_helper'
 
 
 
-		it "redirects to the todo lists index page on success" do
+			def create_todo_list(options={})
+				options[:title] || = "My todo list"
+				options[:description] ||= "This is my todo list."
+
+
 		visit "/todo_lists"
 		click_link "New Todo list"		
 
 
 
 		expect(page).to have_content("New todo_list")
-		fill_in "Title", with:"My todo list"
-		fill_in "Description", with:"This is what I'm doing today."
+		fill_in "Title", with:options[:title]
+		fill_in "Description", with:options[:description]
 		click_button "Create Todo list"
 
 
+
+
+
+
+			end
+
+
+
+		it "redirects to the todo lists index page on success" do
+		
+
+		create_todo_list 
 		expect(page).to have_content("My todo list")
 		end
 
@@ -39,17 +55,11 @@ require 'spec_helper'
 		
 		expect(TodoList.count).to eq(0)
 
-		visit "/todo_lists"
-		click_link "New Todo list"
+
+		create_todo_list title:""
 
 
-
-		expect(page).to have_content("New todo_list")
-		fill_in "Title", with:"Hi"
-		fill_in "Description", with:"This is what I'm doing today."
-		click_button "Create Todo list"
-
-
+		#
 		expect(page).to have_content("error")
 		expect(TodoList.count).to eq(0)
 
