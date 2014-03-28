@@ -127,7 +127,7 @@ require 'spec_helper'
 
 
 
-		create_todo_list title: "Hi"
+		create_todo_list title: "Grocery list", description:"Food"
 
 
 
